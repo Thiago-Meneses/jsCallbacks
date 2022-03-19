@@ -1,0 +1,447 @@
+<!DOCTYPE html>
+<html lang='us'>
+    <head>
+        <meta charset='UTF-8'>
+        <meta name='viewport' content='width=device-width, initial-scale=1'>
+        <title>Callbacks</title>
+
+        <!-- Personal CSS -->
+        <link rel="stylesheet" type="text/css" href="styles.css">
+        <link rel="stylesheet" type="text/css" href="https://thiago-meneses.github.io/spacing.css">
+
+        <!-- FONTS -->
+        <link rel="preconnect" href="https://fonts.googleapis.com">
+        <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+        <link href="https://fonts.googleapis.com/css2?family=Fira+Mono:wght@400;500;700&family=Fira+Sans:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;1,300&family=Roboto+Mono:wght@100;200;300;400;500;600;700&family=Nunito:wght@200;300;400;600;700;800;900&display=swap" rel="stylesheet">
+    </head>
+    <body>
+        <div class="bd-container">
+            <aside>
+                <div class="sidebar-container">
+                    <details class="navbar mt-5">
+                        <summary>Elements</summary>
+                        <ul class="navbar-ul noBullet px-3">
+                            <li><a href="#truthiness">Truthiness</a></li>
+                        </ul>
+                    </details>
+                </div>
+            </aside>
+            <main class="main-container">
+                <div class='main-content'>
+                    <div class="content-header mb-5">
+                        <h1 class="headline title-frame my-3">Callbacks</h1>
+                    </div>
+                    <div class="content">
+                        <p class="px-2 my-3">The following example will be helpful in understanding how <b>callbacks</b> and how <b>passing functions to other functions</b> works!</p>
+                        <details class="example-container-content my-3">
+                            <summary class="my-2"><b>Example - Segment 1</b></summary>
+                            <h3 class="my-3"><b>Passing functions to other functions</b></h3>
+                            <p class="mt-3">In this example we are going to create a function called <code class="inlineCode">myFunc</code> and pass another function called <code class="inlineCode">print</code> as an argument to it.</p>
+                            <div class="example-grid">
+                                <div class="item1">
+                                    <pre class='snippet px-3'>
+                                        <code>
+function myFunc(myCallback) {
+    myCallback("Hello World!");
+}
+
+function print(value) {
+    console.log(value);
+}
+
+myFunc(print)
+                                        </code>
+                                    </pre>
+                                </div>
+                                <div class="item2 mt-3">
+                                    <code>Console:</code>
+                                </div>
+                                <div class="item3">
+                                    <pre class="console">
+                                        <code>
+Hello World!
+                                        </code>
+                                    </pre>
+                                </div>
+                                <div class="item4">
+                                    <p class="mt-5">The <code class="inlineCode">print</code> function is passed as an argument only when we call <code class="inlineCode">myFunc</code></p>
+                                    <p class="mt-4">After executing this code, "Hello World!" you be logged on the console</p>
+	                                <p class="mt-4">Let's better understand this code:</p>
+                                    <ul>
+                                        <li>When we call <code class="inlineCode">myFunc</code> we are essentially creating a new variable called <code class="inlineCode">myCallback</code></li>
+                                        <li class="mt-2"><code class="inlineCode">myCallback</code> is itself going to be a new function, and will be assigned with <code class="inlineCode">print</code></li>
+                                        <li class="mt-2">After this, <code class="inlineCode">print</code> is going to receive "Hello World!" as it's value.</li>
+                                        <li class="mt-2"><code class="inlineCode">print</code> is now free to use this value inside of it's scope, and in this case, log it to the console.</li>
+                                    </ul>
+                                </div>
+                            </div>  
+                        </details>
+                        <details class="example-container-content my-3">
+                            <summary class="my-2"><b>Example - Segment 2</b></summary>
+                            <h3 class="my-3"><b>Repeating the last segment without using <code class="inlineCode">myFunc</code></b></h3>
+                            <p class="mt-3">Using a variable instead of a function.</p>
+                            <div class="example-grid">
+                                <div class="item1">
+                                    <pre class='snippet px-3'>
+                                        <code>
+function print(value) {
+    console.log(value);
+}
+
+const myCallback = print;
+myCallback("Hello World!");
+                                        </code>
+                                    </pre>
+                                </div>
+                                <div class="item2 mt-3">
+                                    <code>Console:</code>
+                                </div>
+                                <div class="item3">
+                                    <pre class="console">
+                                        <code>
+Hello World!
+                                        </code>
+                                    </pre>
+                                </div>
+                                <div class="item4">
+                                    <p class="mt-5">This code has the exact same result that <code class="inlineCode">myFunc</code> had.</p>
+                                    <p class="mt-4">The reason behind this is simple:</p>
+                                    <ul>
+                                        <li>When calling a function, all we are really doing is <b>mapping an outer variable</b> to the <b>inner variable inside of that function</b>.</li>
+                                        <li class="mt-2">In our example, we call <code class="inlineCode">myFunc</code> and the outer variable <code class="inlineCode">print</code> is mapped to the inner variable inside <code class="inlineCode">myCallback</code></li>
+                                    </ul>
+                                    <p class="mt-4">The reason that this works is because in JavaScript <span class="red-backdrop">functions are variables</span></p>
+                                    <p class="mt-5">Do not think of functions as something different from variables!</p>
+                                    <p class="mt-1">Functions are not some "new thing" that works differently from everything else!</p>
+                                    <p class="mt-1"><b>Functions work in the exact same way as any other variable, and consequently, as any other Object!</b></p>
+                                </div>
+                            </div>  
+                        </details>
+                        <details class="example-container-content my-3">
+                            <summary class="my-2"><b>Example - Segment 3</b></summary>
+                            <h3 class="my-3"><b>Setting values on a function</b></h3>
+                            <p class="mt-3">To testify what has been said, we can show how it is possible to set values to a function just like we can do with Objects.</p>
+                            <div class="example-grid">
+                                <div class="item1">
+                                    <pre class='snippet px-3'>
+                                        <code>
+function print(value) {
+    myName = "John";
+}
+
+print.myAge = 32
+
+console.log(print.myAge)
+
+console.dir(print)
+                                        </code>
+                                    </pre>
+                                </div>
+                                <div class="item2 mt-3">
+                                    <code>Console:</code>
+                                </div>
+                                <div class="item3">
+                                    <pre class="console">
+                                        <code>
+John
+
+function print(value)
+    arguments: null
+    caller: null
+    length: 1
+    myAge: 32
+                                        </code>
+                                    </pre>
+                                </div>
+                                <div class="item4">
+                                    <p class="mt-5">We can store things inside of functions just like we can do with Objects!</p>
+                                    <p class="mt-4">Using <code class="inlineCode">console.dir</code> shows us the <code class="inlineCode">myAge</code> property as being set on our print function</p>
+                                </div>
+                            </div>  
+                        </details>
+                        <details class="example-container-content my-3">
+                            <summary class="my-2"><b>Example - Segment 4</b></summary>
+                            <p class="mt-4">Most novices think that functions always need to have <code class="inlineCode">()</code> after them, but this is not true.</p>
+	                        <p class="mt-2">You only need to write <code class="inlineCode">()</code> after a function when you want to <b>call that function</b>.</p>
+                            <h3 class="mt-5"><b>Avoid doing the following mistake</b></h3>
+                            <div class="example-grid">
+                                <div class="item1">
+                                    <pre class='snippet px-3'>
+                                        <code>
+<span class="weak">function print(value) {
+    console.log(`This is my value: ${value}`);
+}
+
+function myFunc(myCallback) {
+    myCallback("Hello World!")
+}
+
+myFunc(</span> print() <span class="weak">)</span>
+                                        </code>
+                                    </pre>
+                                </div>
+                                <div class="item2 mt-3">
+                                    <code>Console:</code>
+                                </div>
+                                <div class="item3">
+                                    <pre class="console">
+                                        <code>
+This is my value: undefined
+
+Uncaught TypeError: myCallback is not a function
+                                        </code>
+                                    </pre>
+                                </div>
+                                <div class="item4">
+                                    <p class="mt-5">When the compiler tried to run this code, it <b>did not</b> assign the <code class="inlineCode">print</code> function to <code class="inlineCode">myCallback</code>
+                                    <p class="mt-1">Instead, the compiler simply called and executed <code class="inlineCode">print</code></p>
+                                    <p class="mt-1">As this was not supposed to happen, the <code class="inlineCode">print</code> function did not take the an argument, and therefore <code class="inlineCode">value</code> was assigned with <code class="inlineCode">undefined</code></p>
+                                    <p class="mt-1">We can see that <code class="inlineCode">undefined</code> really was logged in the console</p>
+                                    <p class="mt-5">And only after all of this <code class="inlineCode">myFunc</code> is going to be executed</p>
+                                    <p class="mt-1">As <code class="inlineCode">print</code> did not have a return statement, <code class="inlineCode">undefined</code> was returned by default</p>
+                                    <p class="mt-1"><code class="inlineCode">myCallback</code> was then assigned with <code class="inlineCode">undefined</code>
+                                    <p class="mt-2">The compiler trie to call <code class="inlineCode">myCallback</code> using <code class="inlineCode">undefined</code> as a callback function and we got an error.</p>
+                                    <p class="mt-5">Callbacks must necessarily be functions, what this error is saying is that the value the console got for a callback was not a function</p>
+                                    <p class="mt-1">Indeed it wasn't, the value the console got was <code class="inlineCode">undefined</code>, and this is not a function</p>
+                                </div>
+                            </div>  
+                        </details>
+                        <details class="example-container-content my-3">
+                            <summary class="my-2"><b>Example - Segment 5</b></summary>
+                            <h3 class="mt-5"><b>Correcting our mistake</b></h3>
+                            <p class="mt-3">Suppose that, in this example, we want to do 2 things:</p>
+                            <ol class="mb-5">
+			                    <li>Return the Object called <code class="inlineCode">myName</code> in it's entirety to the console</li>
+			                    <li>Return only the property called <code class="inlineCode">age</code> from <code class="inlineCode">myName</code></li>
+                            </ol>
+                            <div class="example-grid">
+                                <div class="item1">
+                                    <pre class='snippet px-3'>
+                                        <code>
+function myFunc(person) {
+    return console.log(person)
+}
+
+const myName = { 
+    name: "John",
+    age:32
+};
+
+//FIRST PART
+myFunc(myName)
+
+//SECOND PART
+myFunc(myName.age)
+                                        </code>
+                                    </pre>
+                                </div>
+                                <div class="item2 mt-3">
+                                    <code>Console:</code>
+                                </div>
+                                <div class="item3">
+                                    <pre class="console">
+                                        <code>
+Object
+    age: 32
+    name: "John"
+    &#60prototype>: Object { }
+
+32
+                                        </code>
+                                    </pre>
+                                </div>
+                                <div class="item4">
+                                    <p class="mt-5">For the first part, we simple called <code class="inlineCode">myFunc</code> passing <code class="inlineCode">myName</code></p>
+                                    <p class="mt-2">For the second part, we passed <code class="inlineCode">myName</code> but also specifying the property that we wanted, in this case, <code class="inlineCode">myName.age</code></p>
+                                    <p class="mt-5">This is can be compared to what happens with functions:</p>
+                                    <ul>
+                                        <li>If we want to pass only the function itself, we only need to write it's name</li>
+                                        <li>If we want to pass some property of the function, we should write it afterwards, just like when we write parentheses</li>
+                                    </ul>
+                                    <p class="mt-5">When we want to pass the function in it's entirety we <b>SHOULD NOT</b> use parentheses after it</p>
+	                                <p class="mt-5">Do you want to call the function or do you want to pass the function along? There is a huge difference between the two.</p>
+	                                <p class="mt-1">Most times dealing with callbacks, we just want to <b>pass the function along</b>, and not get it's result straight away.</p>
+                                </div>
+                            </div>  
+                        </details>
+                        <details class="example-container-content my-3">
+                            <summary class="my-2"><b>Example - Segment 6</b></summary>
+                            <h3 class="mt-5"><b>study further</b></h3>
+                            <div class="example-grid">
+                                <div class="item1">
+                                    <pre class='snippet px-3'>
+                                        <code>
+function myFunc(callback) {
+    callback("Hello World!")
+}
+
+myFunc(value => console.log(value))
+//study this further
+                                        </code>
+                                    </pre>
+                                </div>
+                                <div class="item2 mt-3">
+                                    <code>Console:</code>
+                                </div>
+                                <div class="item3">
+                                    <pre class="console">
+                                        <code>
+Hello World!
+                                        </code>
+                                    </pre>
+                                </div>
+                                <div class="item4">
+                                </div>
+                            </div>  
+                        </details>
+                        <div class='frame-line'>
+                            <h1 class='headline' id="functionsAreVariables"><span class="backdrop">Functions are Variables</span></h1>
+                            <p class="px-2 mt-5">To prove this statement we will use an example.</p>
+                            <details class="example-container-chapter my-3">
+                                <summary class="my-2"><b>1º Example</b></summary>
+                                <h3 class="my-3"><b>Logging a function on the console</b></h3>
+                                <p class="mt-3">We create a function called <code class="inlineCode">myFunc</code>, this function will be logged in the console.</p>
+                                <p class="mt-2">We are <b>not</b> going to log this function in the conventional way</p>
+                                <p class="mt-4">This function will be logged without <code class="inlineCode"><b>()</b></code></p>
+                                <p class="mt-2">Using <code class="inlineCode"><b>()</b></code> after a function is what actually <b>calls and executes the code inside the function</b></p>
+                                <p class="my-4">In this example we want to log the function itself, instead of calling it</p>
+                                <div class="example-grid">
+                                    <div class="item1">
+                                        <pre class='snippet px-3'>
+                                            <code>
+<span class="weak">function myFunc() {
+    console.log("Hello World!")
+}</span>
+
+console.log(myFunc)
+                                            </code>
+                                        </pre>
+                                    </div>
+                                    <div class="item2 mt-3">
+                                        <code>Console:</code>
+                                    </div>
+                                    <div class="item3">
+                                        <pre class="console">
+                                            <code>
+<span class="italics">ƒ</span> myFunc() {
+    console.log("Hello World!")
+}
+                                            </code>
+                                        </pre>
+                                    </div>
+                                    <div class="item4">
+                                        <p class="mt-5">The function was not called</p>
+                                        <p class="mt-2">What was logged was the actual definition of the <code class="inlineCode">myFunc</code> function</p>
+                                    </div>
+                                </div> 
+                                <p class="mt-5">To get a more useful representation from this function we can use <code class="inlineCode">console.dir</code></p>
+                                <div class="example-grid">
+                                    <div class="item1">
+                                        <pre class='snippet px-3'>
+                                            <code>
+console.dir(myFunc)
+                                            </code>
+                                        </pre>
+                                    </div>
+                                    <div class="item2 mt-3">
+                                        <code>Console:</code>
+                                    </div>
+                                    <div class="item3">
+                                        <pre class="console">
+                                            <code>
+function helloWorld(value)
+    arguments: null
+    caller: null
+    length: 1
+    name: "helloWorld"
+    prototype: Object { }
+    &#60prototype>: function ()
+                                            </code>
+                                        </pre>
+                                    </div>
+                                    <div class="item4">
+                                        <p class="mt-5">Something that we can notice after using <code class="inlineCode">console.dir</code> is that this function actually looks very similar to an Object</p>
+                                        <p class="mt-5">The similarities between functions and Objects do not end here</p>
+                                    </div>
+                                </div>   
+                            </details>
+                            <details class="example-container-chapter my-3">
+                                <summary class="my-2"><b>2º Example</b></summary>
+                                <h3 class="my-3"><b>Similarities between Functions and Objects</b></h3>
+                                <p class="mt-3">We create a function called <code class="inlineCode">myFunc</code>, this function will be logged in the console.</p>
+                                <p class="mt-2">We are <b>not</b> going to log this function in the conventional way</p>
+                                <p class="mt-4">This function will be logged without <code class="inlineCode"><b>()</b></code></p>
+                                <p class="mt-2">Using <code class="inlineCode"><b>()</b></code> after a function is what actually <b>calls and executes the code inside the function</b></p>
+                                <p class="my-4">In this example we want to log the function itself, instead of calling it</p>
+                                <div class="example-grid">
+                                    <div class="item1">
+                                        <pre class='snippet px-3'>
+                                            <code>
+function myFunc(value) {
+    console.log("Hello World!")
+}
+
+const myObj = {
+    name: "John",
+    age: 32,
+    married: true
+}
+
+console.dir(myFunc)
+console.log(myObj)
+                                            </code>
+                                        </pre>
+                                    </div>
+                                    <div class="item2 mt-3">
+                                        <code>Console:</code>
+                                    </div>
+                                    <div class="item3">
+                                        <pre class="console">
+                                            <code>
+function myFunc(value)
+    arguments: null
+    caller: null
+    length: 1
+    name: "helloWorld"
+    prototype: Object { … }
+    &#60prototype>: function ()
+
+Object
+    age: 32
+    married: true
+    name: "John"
+    &#60prototype>: Object { … }
+                                            </code>
+                                        </pre>
+                                    </div>
+                                    <div class="item4">
+                                        <p class="mt-5">After logging function and Object together, we can see that they are very similar</p>
+                                        <p class="mt-3">The reason behind this is that, in JavaScript, <b>functions are actually Objects</b></p>
+                                        <p class="mt-3">Differences between functions and normal Objects</p>
+                                        <ul>
+                                            <li>Functions are Objects that <b>can be called</b> by writing <code class="inlineCode">()</code> in front of them</li>
+                                            <li>Functions are Objects that <b>can have arguments passed to them</b></li>
+                                        </ul>
+                                        <h4 class="mt-5"><b>And What are Objects?</b></h4>
+                                        <p class="mt-3">Let's remember an important factor:</p>
+		                                <p class="mt-2"><b>Objects are Variables!</b></p>
+                                		<p class="mt-2"><b>Objects are variables that you can pass around!</b></p>
+                                		<p class="mt-2">You can pass your objects anywhere you want:</p>
+                                        <ul>
+                                            <li>You can pass them to a function;</li>
+                                            <li>You can call things that are inside of them;</li>
+                                            <li>You can change them;</li>
+                                            <li>You can do anything!</li>
+                                        </ul>
+		                                <p class="mt-2">All of this is leading up to the fact that consequently <span class="red-backdrop">functions are also variables!</span></p>
+		                                <p class="mt-2">Because of this, functions can also be <b>passed anywhere</b> we want to! Just like Objects, just like variables.</p>
+                                    </div>
+                                </div> 
+                            </details>
+                        </div>
+                    </div>
+				</div>
+            </main>
+        </div>
+    </body>
+</html>
